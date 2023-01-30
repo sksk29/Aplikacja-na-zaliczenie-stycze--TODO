@@ -1,7 +1,11 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx"],
+  "plugins": ["@nrwl/nx", "import", "prettier"],
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "parserOptions": {
+    "project": ["./tsconfig.base.json"]
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -23,8 +27,43 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
-      "rules": {}
+      "extends": ["plugin:@nrwl/nx/typescript", "plugin:import/typescript"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/ban-ts-comment": "warn",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-shadow": "warn"
+      },
+      "overrides": [
+        {
+          "files": ["*.ts"],
+          "rules": {
+            "@typescript-eslint/ban-types": [
+              "warn",
+              {
+                "types": {
+                  "Function": false
+                }
+              }
+            ]
+          }
+        },
+        {
+          "files": ["*.tsx"],
+          "extends": [
+            "plugin:@nrwl/nx/typescript",
+            "plugin:import/typescript",
+            "airbnb-typescript"
+          ],
+          "rules": {
+            "@typescript-eslint/no-unused-vars": "warn",
+            "@typescript-eslint/comma-dangle": "off"
+          }
+        }
+      ]
     },
     {
       "files": ["*.js", "*.jsx"],
@@ -38,5 +77,21 @@
       },
       "rules": {}
     }
-  ]
+  ],
+  "rules": {
+    "no-return-await": "error",
+    "import/order": "warn",
+    "max-len": [
+      "warn",
+      {
+        "code": 105,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "comma-dangle": "off",
+    "prettier/prettier": "warn"
+  }
 }

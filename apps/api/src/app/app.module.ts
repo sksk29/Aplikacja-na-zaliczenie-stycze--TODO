@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
+import { FastestValidatorModule } from '@nest-up/nest-fastest-validator';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { PrismaModule } from '../prisma';
+
+import { TodosModule } from './modules/todos/todos.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [FastestValidatorModule.forRoot(), PrismaModule, TodosModule]
 })
 export class AppModule {}
